@@ -5,14 +5,17 @@
  */
 package model;
 
+//import static TMD.Main.STATE.Game;
+import model.GameObject;
 import java.awt.Color;
 import java.awt.Graphics;
+import model.ID;
 
 /**
  *
  * @author Muhammad Fajar
  */
-public class Player extends PlayerObject {
+public class Player extends GameObject {
 
     public Player(int x, int y, ID id) {
         super(x, y, id);
@@ -23,8 +26,8 @@ public class Player extends PlayerObject {
         x += vel_x;
         y += vel_y;
         
-//        x = Game.clamp(x, 0, Game.WIDTH - 60);
-//        y = Game.clamp(y, 0, Game.HEIGHT - 80);
+//        x = Main.clamp(x, 0, Main.WIDTH - 60);
+//        y = Main.clamp(y, 0, Main.HEIGHT - 80);
     }
 
     @Override

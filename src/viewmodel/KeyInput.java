@@ -5,11 +5,11 @@
  */
 package viewmodel;
 
-import TMD.Main;
-import TMD.Main.STATE;
+import model.GameObject;
+import viewmodel.Game.STATE;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import model.PlayerObject;
+import view.Menu;
 
 /**
  *
@@ -17,9 +17,9 @@ import model.PlayerObject;
  */
 public class KeyInput extends KeyAdapter {
     private Handler handler;
-    Main main;
+    Game main;
     
-    public KeyInput(Handler handler, Main main){
+    public KeyInput(Handler handler, Game main){
         this.main = main;
         this.handler = handler;
     }
@@ -28,7 +28,7 @@ public class KeyInput extends KeyAdapter {
         
         if(main.gameState == STATE.Game){
             for(int i = 0;i<handler.object.size();i++){
-                PlayerObject tempObject = handler.object.get(i);
+                GameObject tempObject = handler.object.get(i);
                 if((key == KeyEvent.VK_W) || (key == KeyEvent.VK_UP)){
                     tempObject.setVel_y(-5);
                 }
@@ -65,7 +65,7 @@ public class KeyInput extends KeyAdapter {
         int key = e.getKeyCode();
         
         for(int i = 0;i<handler.object.size();i++){
-            PlayerObject tempObject = handler.object.get(i);
+            GameObject tempObject = handler.object.get(i);
             if((key == KeyEvent.VK_W) || (key == KeyEvent.VK_UP)){
                 tempObject.setVel_y(0);
             }

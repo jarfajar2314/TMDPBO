@@ -6,18 +6,19 @@
 package model;
 
 import java.awt.Graphics;
+import model.ID;
 
 /**
  *
  * @author Muhammad Fajar
  */
-public abstract class PlayerObject {
+public abstract class GameObject {
     protected int x, y;
-    protected ID id;
     protected int vel_x;
     protected int vel_y;
+    protected ID id;
     
-    public PlayerObject(int x, int y, ID id){
+    public GameObject(int x, int y, ID id){
         this.x = x;
         this.y = y;
         this.id = id;

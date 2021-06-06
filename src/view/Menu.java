@@ -15,12 +15,12 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import javax.swing.SortOrder;
 import javax.swing.JOptionPane;
-import TMD.Main;
+import viewmodel.Game;
 
 
 /**
  *
- * @author Fauzan
+ * @author Muhammad Fajar
  */
 public class Menu extends javax.swing.JFrame {
 
@@ -48,10 +48,10 @@ public class Menu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         HighScore = new javax.swing.JTable();
-        Btn_Play1 = new javax.swing.JButton();
-        Btn_Play2 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        btn_exit = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        btn_play = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Main Menu");
@@ -76,134 +76,97 @@ public class Menu extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(HighScore);
 
-        Btn_Play1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        Btn_Play1.setText("Singleplayer");
-        Btn_Play1.addActionListener(new java.awt.event.ActionListener() {
+        btn_exit.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_exit.setText("Keluar");
+        btn_exit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Btn_Play1ActionPerformed(evt);
+                btn_exitActionPerformed(evt);
             }
         });
-
-        Btn_Play2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        Btn_Play2.setText("Multiplayer");
-        Btn_Play2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Btn_Play2ActionPerformed(evt);
-            }
-        });
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Easy", "Normal", "Hard" }));
 
         jLabel2.setText("Muhammad Fajar Yusuf Firdaus | 1901581");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setText("THE HIGHEST LEVEL");
+
+        btn_play.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_play.setText("Main");
+        btn_play.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_playActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(216, 216, 216)
+                .addContainerGap(184, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Btn_Play1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(Btn_Play2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(TF_Username, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(188, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addGap(18, 18, 18)
+                            .addComponent(TF_Username, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(284, 284, 284))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(307, 307, 307))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(163, 163, 163))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(159, 159, 159))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(284, 284, 284))))
+                        .addComponent(btn_play, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(55, 55, 55)
+                        .addComponent(btn_exit, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(247, 247, 247))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(123, 123, 123)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71)
+                .addGap(55, 55, 55)
+                .addComponent(jLabel3)
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(TF_Username, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(40, 40, 40)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Btn_Play1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Btn_Play2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
+                    .addComponent(btn_exit, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_play, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
                 .addComponent(jLabel2)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    // Single
-    private void Btn_Play1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Play1ActionPerformed
+    private void btn_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exitActionPerformed
         // TODO add your handling code here:
-        String username = TF_Username.getText();
-        // System.out.println(username.length());
-        if(username.length() != 0){
-            String dif = String.valueOf(jComboBox1.getSelectedItem());
-            Main main = null;
-            if(dif == "Easy"){
-                main = new Main('s', 20, 50);
-                System.out.println("Ez");
-            }
-            else if(dif == "Normal"){
-                main = new Main('s', 10, 30);
-                System.out.println("Normie");
-            }
-            else{
-                main = new Main('s', 5, 20);
-                System.out.println("Hard");
-            }
-            main.setUsername(username);
-            this.dispose();
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Username Tidak Boleh Kosong!");
-        }
-    }//GEN-LAST:event_Btn_Play1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btn_exitActionPerformed
 
-    // Multi   
-    private void Btn_Play2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Play2ActionPerformed
-        // TODO add your handling code here:
+    private void btn_playActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_playActionPerformed
+        // TODO add your handling code here:        
         String username = TF_Username.getText();
         // System.out.println(username.length());
         if(username.length() != 0){
-            String dif = String.valueOf(jComboBox1.getSelectedItem());
-            Main main = null;
-            if(dif == "Easy"){
-                main = new Main('m', 20, 50);
-                System.out.println("M Ez");
-            }
-            else if(dif == "Normal"){
-                main = new Main('m', 10, 30);
-                System.out.println("M Normie");
-            }
-            else{
-                main = new Main('m', 5, 20);
-                System.out.println("M Hard");
-            }
-            main.setUsername(username);
+            Game game = null;
+            game = new Game();
+//            game.setUsername(username);
             this.dispose();
         }
         else{
             JOptionPane.showMessageDialog(null, "Username Tidak Boleh Kosong!");
         }
-    }//GEN-LAST:event_Btn_Play2ActionPerformed
+    }//GEN-LAST:event_btn_playActionPerformed
 
     
     /**
@@ -244,13 +207,13 @@ public class Menu extends javax.swing.JFrame {
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Btn_Play1;
-    private javax.swing.JButton Btn_Play2;
     private javax.swing.JTable HighScore;
     private javax.swing.JTextField TF_Username;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btn_exit;
+    private javax.swing.JButton btn_play;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

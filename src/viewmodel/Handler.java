@@ -5,6 +5,7 @@
  */
 package viewmodel;
 
+import model.GameObject;
 import java.awt.Graphics;
 import java.util.LinkedList;
 import model.*;
@@ -14,11 +15,11 @@ import model.*;
  * @author Muhammad Fajar
  */
 public class Handler {
-    LinkedList<PlayerObject> object = new LinkedList<PlayerObject>();
+    LinkedList<GameObject> object = new LinkedList<GameObject>();
     
     public void tick(){
         for(int i=0;i<object.size(); i++){
-            PlayerObject tempObject = object.get(i);
+            GameObject tempObject = object.get(i);
             
             tempObject.tick();
         }
@@ -26,17 +27,17 @@ public class Handler {
     
     public void render(Graphics g){
         for(int i=0;i<object.size(); i++){
-            PlayerObject tempObject = object.get(i);
+            GameObject tempObject = object.get(i);
             
             tempObject.render(g);
         }
     }
     
-    public void addObject(PlayerObject object){
+    public void addObject(GameObject object){
         this.object.add(object);
     }
     
-    public void removeObject(PlayerObject object){
+    public void removeObject(GameObject object){
         this.object.remove(object);
     }
     
