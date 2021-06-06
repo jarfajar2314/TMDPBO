@@ -17,6 +17,7 @@ public abstract class GameObject {
     protected int vel_x;
     protected int vel_y;
     protected ID id;
+    protected boolean onAir = false;
     
     public GameObject(int x, int y, ID id){
         this.x = x;
@@ -66,5 +67,13 @@ public abstract class GameObject {
 
     public void setVel_y(int vel_y) {
         this.vel_y = vel_y;
+    }
+    
+    public void setOnAir(boolean set) {
+        this.onAir = set;
+    }
+    
+    public boolean isOnAir() {
+        return this.onAir;
     }
 }

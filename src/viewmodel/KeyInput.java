@@ -31,6 +31,7 @@ public class KeyInput extends KeyAdapter {
                 GameObject tempObject = handler.object.get(i);
                 if((key == KeyEvent.VK_W) || (key == KeyEvent.VK_UP)){
                     tempObject.setVel_y(-5);
+                    //tempObject.setOnAir(true);
                 }
 
                 if((key == KeyEvent.VK_S) || (key == KeyEvent.VK_DOWN)){
@@ -44,6 +45,9 @@ public class KeyInput extends KeyAdapter {
                 if((key == KeyEvent.VK_D) || (key == KeyEvent.VK_RIGHT)){
                     tempObject.setVel_x(+5);
                 }
+                if(key == KeyEvent.VK_SPACE){
+                    tempObject.setOnAir(true);
+                }  
             }
             
         }

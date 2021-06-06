@@ -10,6 +10,7 @@ import model.GameObject;
 import java.awt.Color;
 import java.awt.Graphics;
 import model.ID;
+import viewmodel.Game;
 
 /**
  *
@@ -26,6 +27,14 @@ public class Player extends GameObject {
         x += vel_x;
         y += vel_y;
         
+        if(y >= Game.HEIGHT-80) {
+            y = Game.HEIGHT-80;
+            //this.onAir = false;
+        }
+        if(this.onAir == true){
+            //y -= vel_y;
+        }
+       
 //        x = Main.clamp(x, 0, Main.WIDTH - 60);
 //        y = Main.clamp(y, 0, Main.HEIGHT - 80);
     }
