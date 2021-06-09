@@ -11,5 +11,5 @@ package model;
  */
 public enum ID {
     Player(),
-    Item(),
+    Platform(),
 }

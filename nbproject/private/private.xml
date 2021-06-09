@@ -5,9 +5,11 @@
         <group>
             <file>file:/D:/FAJAR/Code/Java/TMD/src/model/GameObject.java</file>
             <file>file:/D:/FAJAR/Code/Java/TMD/src/model/Player.java</file>
+            <file>file:/D:/FAJAR/Code/Java/TMD/src/model/Platform.java</file>
             <file>file:/D:/FAJAR/Code/Java/TMD/src/viewmodel/Game.java</file>
             <file>file:/D:/FAJAR/Code/Java/TMD/src/viewmodel/Handler.java</file>
             <file>file:/D:/FAJAR/Code/Java/TMD/src/Main.java</file>
+            <file>file:/D:/FAJAR/Code/Java/TMD/src/model/ID.java</file>
             <file>file:/D:/FAJAR/Code/Java/TMD/src/viewmodel/KeyInput.java</file>
         </group>
     </open-files>

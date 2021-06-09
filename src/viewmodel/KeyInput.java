@@ -9,6 +9,7 @@ import model.GameObject;
 import viewmodel.Game.STATE;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import model.ID;
 import view.Menu;
 
 /**
@@ -28,26 +29,30 @@ public class KeyInput extends KeyAdapter {
         
         if(main.gameState == STATE.Game){
             for(int i = 0;i<handler.object.size();i++){
-                GameObject tempObject = handler.object.get(i);
-                if((key == KeyEvent.VK_W) || (key == KeyEvent.VK_UP)){
-                    tempObject.setVel_y(-5);
-                    //tempObject.setOnAir(true);
-                }
+                if(handler.object.get(i).getId() == ID.Player){                 
+                    GameObject tempObject = handler.object.get(i);
+                    if((key == KeyEvent.VK_W) || (key == KeyEvent.VK_UP)){
+    //                    tempObject.setVel_y(-5);
+                        tempObject.setOnAir(true);
+                    }
 
-                if((key == KeyEvent.VK_S) || (key == KeyEvent.VK_DOWN)){
-                    tempObject.setVel_y(+5);
-                }
+                    if((key == KeyEvent.VK_S) || (key == KeyEvent.VK_DOWN)){
+                        tempObject.setVel_y(+5);
+                    }
 
-                if((key == KeyEvent.VK_A) || (key == KeyEvent.VK_LEFT)){
-                    tempObject.setVel_x(-5);
-                }
+                    if((key == KeyEvent.VK_A) || (key == KeyEvent.VK_LEFT)){
+                        tempObject.setVel_x(-5);
+                    }
 
-                if((key == KeyEvent.VK_D) || (key == KeyEvent.VK_RIGHT)){
-                    tempObject.setVel_x(+5);
+                    if((key == KeyEvent.VK_D) || (key == KeyEvent.VK_RIGHT)){
+                        tempObject.setVel_x(+5);
+                    }
+                    if(key == KeyEvent.VK_SPACE){
+//                        tempObject.setOnAir(true);
+                        main.gameState = STATE.GameOver;
+                    }
+                    break;
                 }
-                if(key == KeyEvent.VK_SPACE){
-                    tempObject.setOnAir(true);
-                }  
             }
             
         }
@@ -69,21 +74,24 @@ public class KeyInput extends KeyAdapter {
         int key = e.getKeyCode();
         
         for(int i = 0;i<handler.object.size();i++){
-            GameObject tempObject = handler.object.get(i);
-            if((key == KeyEvent.VK_W) || (key == KeyEvent.VK_UP)){
-                tempObject.setVel_y(0);
-            }
+            if(handler.object.get(i).getId() == ID.Player){
+                GameObject tempObject = handler.object.get(i);
+                if((key == KeyEvent.VK_W) || (key == KeyEvent.VK_UP)){
+                    tempObject.setVel_y(0);
+                }
 
-            if((key == KeyEvent.VK_S) || (key == KeyEvent.VK_DOWN)){
-                tempObject.setVel_y(0);
-            }
+                if((key == KeyEvent.VK_S) || (key == KeyEvent.VK_DOWN)){
+                    tempObject.setVel_y(0);
+                }
 
-            if((key == KeyEvent.VK_A) || (key == KeyEvent.VK_LEFT)){
-                tempObject.setVel_x(0);
-            }
+                if((key == KeyEvent.VK_A) || (key == KeyEvent.VK_LEFT)){
+                    tempObject.setVel_x(0);
+                }
 
-            if((key == KeyEvent.VK_D) || (key == KeyEvent.VK_RIGHT)){
-                tempObject.setVel_x(0);
+                if((key == KeyEvent.VK_D) || (key == KeyEvent.VK_RIGHT)){
+                    tempObject.setVel_x(0);
+                }
+                break;
             }
         }
     }

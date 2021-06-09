@@ -13,7 +13,8 @@ import model.ID;
  * @author Muhammad Fajar
  */
 public abstract class GameObject {
-    protected int x, y;
+    public int x;
+    public int y;
     protected int vel_x;
     protected int vel_y;
     protected ID id;
@@ -27,6 +28,8 @@ public abstract class GameObject {
     
     
     public abstract void tick();
+    public abstract int getLevel();
+    public abstract int getIdx();
     public abstract void render(Graphics g);
 
     public int getX() {

@@ -16,46 +16,45 @@ import viewmodel.Game;
  *
  * @author Muhammad Fajar
  */
-public class Player extends GameObject {
-
-    public Player(int x, int y, ID id) {
+public class Platform extends GameObject {
+    private int level;
+    private int idx;
+    private String[] colors = {
+        "#772E25",
+        "#C44536",
+        "#E6A786",
+        "#197278",
+        "#2F3D66",
+        "#E25985",
+    };
+    private String color;
+    
+    public Platform(int x, int y, ID id, int level, int idx) {
         super(x, y, id);
+        this.level = level;
+        this.idx = idx;
+        this.color = colors[level];
+    }
+    
+    public int getLevel(){
+        return this.level;
+    }
+    
+    public int getIdx(){
+        return this.idx;
     }
 
     @Override
     public void tick() {
         x += vel_x;
-        y += vel_y;
-        
-        if(y >= Game.HEIGHT-80) {
-            y = Game.HEIGHT-80;
-            //this.onAir = false;
-        }
-        if(x <= 0) {
-            x = 0;
-        }
-        if(x >= Game.WIDTH-60) {
-            x = Game.WIDTH-60;
-        }
-        
     }
 
     @Override
     public void render(Graphics g) {
         String colorCode;
-        colorCode = "#3f6082";
+        colorCode = this.color;
         g.setColor(Color.decode(colorCode));
-        g.fillOval(x, y, 50, 50);
-    }
-
-    @Override
-    public int getLevel() {
-        return 0;
-    }
-
-    @Override
-    public int getIdx() {
-        return 0;
+        g.fillRect(x, y, 100, 25);
     }
     
 }
