@@ -85,7 +85,8 @@ public class Game extends Canvas implements Runnable {
             for(int i = 0; i < 3; i++){
                 tempX = 0;
                 for(int j = 0; j < 8; j++){
-                    if(j != 2 && j != 7){
+                    
+                    if(j != randInt(0, 7) && j != randInt(0, 7)){
                         handler.addObject(new Platform(tempX, tempY, ID.Platform, i, j));
                     }
                     tempX += 100;
@@ -124,6 +125,7 @@ public class Game extends Canvas implements Runnable {
         int dmax = 250;
         boolean fall = false;
         int t0 = 0;
+        boolean tempS = false;
 //        playSound("/BGM.wav"); // play BGM
 
         while(running){
@@ -198,7 +200,7 @@ public class Game extends Canvas implements Runnable {
             if(dy > this.HEIGHT){
                 dy = 0;
             }
-
+            
 //          Gravity System
             if(player != null && player.isOnAir()){
 //                if(y0 == -1){
@@ -220,6 +222,11 @@ public class Game extends Canvas implements Runnable {
                 dy = ypos - player.getY();
                 if((dy >= dmax && !fall) || hit == true) {
                     System.out.println("dmax");
+                    if(hit == true && !landed && !tempS){
+                        System.out.println("Score++");
+                        fail += 10;
+                        tempS = true;
+                    }
                     fall = true;
                     hit = false;
                     //player.setVel_y(+5);
@@ -228,12 +235,14 @@ public class Game extends Canvas implements Runnable {
 //                        System.out.println("jump");
                     // jump
                     player.setVel_y((dmax/10-dy/10)*-1);
+//                    player.setVel_y(-3);
                 }
                 else if(fall && dy > 0 && landed == false){
                     // fall
 //                        System.out.println("fall");
-                    t0++;
+                    t0++;                                         
                     player.setVel_y(t0/3);
+//                    player.setVel_y(3);
                 }
                 else if(dy <= 0 && fall || player.getY() == ypos || landed){
                     System.out.println("reset");
@@ -249,6 +258,7 @@ public class Game extends Canvas implements Runnable {
                     fall = false;
                     t0 = 0;                  
                     landed = false;
+                    tempS = false;
                 }                
             }
             
@@ -284,7 +294,7 @@ public class Game extends Canvas implements Runnable {
 //                                STATE.LevelUp;
                             }
                             hit = true;
-                            fail += 10;
+//                            fail += 10;
                             break;
                         }
                     }
@@ -406,6 +416,16 @@ public class Game extends Canvas implements Runnable {
                 i = -1;
             }
         }
+        tempY -= 180;
+        int tempX = 0;
+//        int tempY = 400;
+        for(int j = 0; j < 8; j++){
+            if(j != randInt(0, 7) && j != randInt(0, 7)){
+                handler.addObject(new Platform(tempX, tempY, ID.Platform, currentLv+3, j));
+            }
+            tempX += 100;
+        }
+        
         
         success += 10;
         currentLv++;
@@ -436,7 +456,7 @@ public class Game extends Canvas implements Runnable {
             g.drawString("Success: " +Integer.toString(success) , 20, 20);
             
             g.setColor(Color.BLACK);
-            g.drawString("Fail: " +Integer.toString(success) , 20, 30);
+            g.drawString("Fail: " +Integer.toString(fail) , 20, 40);
 //
 //            g.setColor(Color.BLACK);
 //            g.drawString("FPS: " +Integer.toString(fps), WIDTH-120, 20);
@@ -466,5 +486,12 @@ public class Game extends Canvas implements Runnable {
     
     public void close(){
         window.CloseWindow();
+    }
+    
+    public static int randInt(int min, int max) {
+        Random rand = new Random();
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+
+        return randomNum;
     }
 }

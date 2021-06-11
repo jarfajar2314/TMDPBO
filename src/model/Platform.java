@@ -33,7 +33,7 @@ public class Platform extends GameObject {
         super(x, y, id);
         this.level = level;
         this.idx = idx;
-        this.color = colors[level];
+        this.color = colors[level % 6];
     }
     
     public int getLevel(){
