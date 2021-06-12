@@ -8,7 +8,6 @@ package viewmodel;
 import model.GameObject;
 import java.awt.Graphics;
 import java.util.LinkedList;
-import model.*;
 
 /**
  *
@@ -20,7 +19,6 @@ public class Handler {
     public void tick(){
         for(int i=0;i<object.size(); i++){
             GameObject tempObject = object.get(i);
-            
             tempObject.tick();
         }
     }

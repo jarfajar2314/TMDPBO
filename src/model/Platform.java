@@ -9,8 +9,6 @@ package model;
 import model.GameObject;
 import java.awt.Color;
 import java.awt.Graphics;
-import model.ID;
-import viewmodel.Game;
 
 /**
  *
@@ -36,10 +34,12 @@ public class Platform extends GameObject {
         this.color = colors[level % 6];
     }
     
+    @Override
     public int getLevel(){
         return this.level;
     }
     
+    @Override
     public int getIdx(){
         return this.idx;
     }

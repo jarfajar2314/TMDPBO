@@ -32,7 +32,6 @@ public class KeyInput extends KeyAdapter {
                 if(handler.object.get(i).getId() == ID.Player){                 
                     GameObject tempObject = handler.object.get(i);
                     if((key == KeyEvent.VK_W) || (key == KeyEvent.VK_UP)){
-    //                    tempObject.setVel_y(-5);
                         tempObject.setOnAir(true);
                     }
 
@@ -48,28 +47,19 @@ public class KeyInput extends KeyAdapter {
                         tempObject.setVel_x(+5);
                     }
                     if(key == KeyEvent.VK_SPACE){
-//                        tempObject.setOnAir(true);
                         main.gameState = STATE.GameOver;
+                        main.uploadScore();
+                        new Menu().setVisible(true);
+                        main.close();
                     }
                     break;
                 }
             }
             
         }
-        
-        if(main.gameState == STATE.GameOver){
-            if(key == KeyEvent.VK_SPACE){
-                new Menu().setVisible(true);
-                main.close();
-            }
-        }
-        if(key == KeyEvent.VK_ESCAPE){
-            System.exit(1);
-        }   
+           
     }
-    
-    
-    
+            
     public void keyReleased(KeyEvent e){
         int key = e.getKeyCode();
         

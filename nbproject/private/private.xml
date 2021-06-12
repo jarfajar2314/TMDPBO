@@ -3,18 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/FAJAR/Code/Java/TMD/src/model/DB.java</file>
-            <file>file:/D:/FAJAR/Code/Java/TMD/src/model/GameObject.java</file>
-            <file>file:/D:/FAJAR/Code/Java/TMD/src/model/Player.java</file>
-            <file>file:/D:/FAJAR/Code/Java/TMD/src/model/Platform.java</file>
-            <file>file:/D:/FAJAR/Code/Java/TMD/src/viewmodel/Game.java</file>
-            <file>file:/D:/FAJAR/Code/Java/TMD/src/view/Menu.java</file>
-            <file>file:/D:/FAJAR/Code/Java/TMD/src/viewmodel/Handler.java</file>
-            <file>file:/D:/FAJAR/Code/Java/TMD/src/model/dbConnection.java</file>
-            <file>file:/D:/FAJAR/Code/Java/TMD/src/view/Window.java</file>
-            <file>file:/D:/FAJAR/Code/Java/TMD/src/Main.java</file>
-            <file>file:/D:/FAJAR/Code/Java/TMD/src/model/ID.java</file>
-            <file>file:/D:/FAJAR/Code/Java/TMD/src/viewmodel/KeyInput.java</file>
+            <file>file:/D:/Nitip%20Fajar/Code/TMDPBO/src/model/GameObject.java</file>
+            <file>file:/D:/Nitip%20Fajar/Code/TMDPBO/src/viewmodel/Sound.java</file>
+            <file>file:/D:/Nitip%20Fajar/Code/TMDPBO/src/model/Player.java</file>
+            <file>file:/D:/Nitip%20Fajar/Code/TMDPBO/src/model/DB.java</file>
+            <file>file:/D:/Nitip%20Fajar/Code/TMDPBO/src/view/Window.java</file>
+            <file>file:/D:/Nitip%20Fajar/Code/TMDPBO/src/viewmodel/Game.java</file>
+            <file>file:/D:/Nitip%20Fajar/Code/TMDPBO/src/viewmodel/Handler.java</file>
+            <file>file:/D:/Nitip%20Fajar/Code/TMDPBO/src/Main.java</file>
+            <file>file:/D:/Nitip%20Fajar/Code/TMDPBO/src/view/Menu.java</file>
+            <file>file:/D:/Nitip%20Fajar/Code/TMDPBO/src/model/TabelLevel.java</file>
+            <file>file:/D:/Nitip%20Fajar/Code/TMDPBO/src/viewmodel/KeyInput.java</file>
+            <file>file:/D:/Nitip%20Fajar/Code/TMDPBO/src/model/ID.java</file>
+            <file>file:/D:/Nitip%20Fajar/Code/TMDPBO/src/model/Platform.java</file>
         </group>
     </open-files>
 </project-private>

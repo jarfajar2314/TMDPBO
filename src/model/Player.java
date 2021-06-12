@@ -29,7 +29,6 @@ public class Player extends GameObject {
         
         if(y >= Game.HEIGHT-80) {
             y = Game.HEIGHT-80;
-            //this.onAir = false;
         }
         if(x <= 0) {
             x = 0;

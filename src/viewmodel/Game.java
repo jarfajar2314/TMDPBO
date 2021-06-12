@@ -9,10 +9,12 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
+import javax.sound.sampled.Clip;
+import javax.swing.JOptionPane;
 import model.GameObject;
 import model.ID;
+import model.TabelLevel;
 import view.*;
-import viewmodel.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -32,22 +34,36 @@ public class Game extends Canvas implements Runnable {
     // Height
     public static final int HEIGHT = 600;
     
+    // Thread
     private Thread thread;
     private boolean running = false;
     
-    private int time = 10;
+    // Data Game
+    private String username;
     private int success = 0;
-    private int fail = 0;
-    
-    private int currentLv = 0;
+    private int fail = 0;    
 
-    private int pX;
-    private int pY;
+    // Game variable
+    private int currentLv = 0;
     private int fps;
     private boolean hit = false;
     private boolean landed = false;
-    private boolean lvUp = false;
     private int pBtm = 0;
+    
+    // Clip untuk bgm
+    private Clip clip;
+    
+    // Background colors
+    private String[] bgColors = {
+        "#BFD1FF",
+        "#BFF0FF",
+        "#BFFFCD",
+        "#E7FFBF",
+        "#FFF5BF",
+        "#FFCBBF",
+        "#FFBFDE",
+        "#DBBFFF"
+    };
     
     // Object handler
     private Handler handler;
@@ -70,23 +86,15 @@ public class Game extends Canvas implements Runnable {
         this.addKeyListener(new KeyInput(handler, this));
         
         if(gameState == STATE.Game){
-//            handler.addObject(new Items(100,150, ID.Item));
-            handler.addObject(new Player(340, 520, ID.Player));
-//            int temp = 0;
-//            for(int i = 0; i < 8; i++){
-//                if(i != 2 && i != 7){
-//                    handler.addObject(new Platform(temp, 400, ID.Platform, 0, i));
-//                    handler.addObject(new Platform(temp, 400, ID.Platform, 0, i));
-//                }
-//                temp += 100;
-//            }
+            // Add Player
+            handler.addObject(new Player(340, 510, ID.Player));
             int tempX = 0;
             int tempY = 400;
             for(int i = 0; i < 3; i++){
                 tempX = 0;
                 for(int j = 0; j < 8; j++){
-                    
-                    if(j != randInt(0, 7) && j != randInt(0, 7)){
+                    // Create platform
+                    if(j != randInt(0, 7) && j != randInt(0, 7)){ // randomize gap
                         handler.addObject(new Platform(tempX, tempY, ID.Platform, i, j));
                     }
                     tempX += 100;
@@ -95,13 +103,20 @@ public class Game extends Canvas implements Runnable {
             }
         }
     }
+    
+    // Username setter
+    public void setUsername(String username){
+        this.username = username;
+    }
 
+    // Thread Start
     public synchronized void start() {
         thread = new Thread(this);
         thread.start();
         running = true;
     }
     
+    // Thread Stop
     public synchronized void stop() {
         try{
             thread.join();
@@ -111,6 +126,7 @@ public class Game extends Canvas implements Runnable {
         }
     }
     
+    // Main Gameloop
     @Override
     public void run() {
         long lastTime = System.nanoTime();
@@ -126,7 +142,8 @@ public class Game extends Canvas implements Runnable {
         boolean fall = false;
         int t0 = 0;
         boolean tempS = false;
-//        playSound("/BGM.wav"); // play BGM
+        Sound bgm = new Sound();
+        clip = bgm.playSound(this.clip, "Stage.wav");
 
         while(running){
             long now = System.nanoTime();
@@ -143,6 +160,7 @@ public class Game extends Canvas implements Runnable {
             }
             
             if(gameState == STATE.GameOver){
+                bgm.stopSound(this.clip);
                 stop();
             }
             
@@ -153,7 +171,7 @@ public class Game extends Canvas implements Runnable {
                 }
             }
             
-            // Moving Player           
+            // Platforms moves
             if(System.currentTimeMillis() - timer > 1000){
                 elapsed++;
                 timer += 1000;
@@ -181,49 +199,27 @@ public class Game extends Canvas implements Runnable {
                             }
                         }
                     }
-                }
-                
-//                GameObject player = null;
-//                for(int i=0;i< handler.object.size(); i++){
-//                    if(handler.object.get(i).getId() == ID.Player){
-//                        player = handler.object.get(i);
-//                    }
-//                }
-//                int pX = player.getX();
-//                int pY = player.getY();
-//                System.out.println("X: " + pX + " | Y : " + pY);
+                }              
                 frames = 0;
-                if(gameState == STATE.Game){
-                    
-                }
             }
+            // .platforms moves
+            
             if(dy > this.HEIGHT){
                 dy = 0;
             }
             
-//          Gravity System
+            // Gravity System
             if(player != null && player.isOnAir()){
-//                if(y0 == -1){
-//                    y0 = player.getY();
-//                    t0 = elapsed;
-//                }
-//                else{
-//                    int yx = y0 - g * ((elapsed-t0)*(elapsed-t0)) / 2;
-//                    player.setY(yx);
-//                }
-                
-//                =============================================
-//                System.out.println("dy = " + dy + " | ypos = " + ypos + " | fall =" + fall);
                 if(ypos == -1){
-                    System.out.println("set ypos");
+                    // System.out.println("set ypos");
                     ypos = player.getY();
                     t0 = 0;                    
                 }
                 dy = ypos - player.getY();
+                // on dmax
                 if((dy >= dmax && !fall) || hit == true) {
-                    System.out.println("dmax");
+                    // System.out.println("dmax");
                     if(hit == true && !landed && !tempS){
-                        System.out.println("Score++");
                         fail += 10;
                         tempS = true;
                     }
@@ -231,21 +227,22 @@ public class Game extends Canvas implements Runnable {
                     hit = false;
                     //player.setVel_y(+5);
                 }
+                // jump
                 if(!fall && dy < dmax){
-//                        System.out.println("jump");
-                    // jump
+                    // System.out.println("jump");
                     player.setVel_y((dmax/10-dy/10)*-1);
-//                    player.setVel_y(-3);
+                    // player.setVel_y(-3);
                 }
+                // fall
                 else if(fall && dy > 0 && landed == false){
-                    // fall
-//                        System.out.println("fall");
+                    // System.out.println("fall");
                     t0++;                                         
-                    player.setVel_y(t0/3);
-//                    player.setVel_y(3);
+                    player.setVel_y(t0/7);
+                    // player.setVel_y(((dmax)/10));
                 }
+                // landed
                 else if(dy <= 0 && fall || player.getY() == ypos || landed){
-                    System.out.println("reset");
+                    // System.out.println("reset");
                     player.setVel_y(0);
                     player.setY(ypos);
                     if(landed){ 
@@ -261,40 +258,38 @@ public class Game extends Canvas implements Runnable {
                     tempS = false;
                 }                
             }
-            
+            // .gravity
         }
         stop();
     }
     
     private void tick() {
+        // move all object per tick
         handler.tick();
         if(gameState == STATE.Game){
             GameObject playerObject = null;
+            // get player object
             for(int i=0;i< handler.object.size(); i++){
                 if(handler.object.get(i).getId() == ID.Player){
                     playerObject = handler.object.get(i);
                 }
             }
             if(playerObject != null){
-//                hrCheck(playerObject);
+                // then check collision
                 for(int i=0;i< handler.object.size(); i++){
                     if(handler.object.get(i).getId() == ID.Platform && handler.object.get(i).getLevel() == currentLv){
                         GameObject prevP = null;
                         GameObject nextP = null;
-                        if(i > 0 && handler.object.get(i-1).getIdx() == handler.object.get(i).getIdx()-1){
+                        if(i > 0 && handler.object.get(i-1).getIdx() == handler.object.get(i).getIdx()-1 && handler.object.get(i).getIdx() > 0){
                             prevP = handler.object.get(i-1);
                         }
-                        if(i < handler.object.size()-1 &&handler.object.get(i+1).getIdx() == handler.object.get(i).getIdx()+1){
+                        if(i < handler.object.size()-1 &&handler.object.get(i+1).getIdx() == handler.object.get(i).getIdx()+1 && handler.object.get(i).getIdx() < 7){
                             nextP = handler.object.get(i+1);
                         }
                         if(checkCollision(playerObject, handler.object.get(i), prevP, nextP)){
-                            System.out.print("Collided on : ");
-                            System.out.println(playerObject.getX() + "|" + playerObject.getY());
-                            if(landed == true){
-//                                STATE.LevelUp;
-                            }
+                            // System.out.print("Collided on : ");
+                            // System.out.println(playerObject.getX() + "|" + playerObject.getY());
                             hit = true;
-//                            fail += 10;
                             break;
                         }
                     }
@@ -303,6 +298,7 @@ public class Game extends Canvas implements Runnable {
         }
     }
     
+    // Check collision function
     public boolean checkCollision(GameObject player, GameObject platform, GameObject prevP, GameObject nextP){
         boolean result = false;
         
@@ -319,42 +315,11 @@ public class Game extends Canvas implements Runnable {
         int platformRight = platform.x + wPlatform;
         int platformTop = platform.y;
         int platformBottom = platform.y + hPlatform;
-        
-        if(prevP != null) {
-            platformLeft -= wPlatform;
-        }
-        
-        if(nextP != null){
-            platformRight += wPlatform;
-        }
                 
-        if((playerRight > platformLeft ) &&
-        (playerLeft < platformRight) &&
-        (platformBottom > playerTop) &&
-        (platformTop < playerBottom)
-        ){
-//            if((playerBottom  <= platformBottom)){
-//                System.out.println("top side");
-//            }
-//            
-//            if((playerLeft >= platformLeft)){
-//                System.out.println("left side in");
-//            }
-//            else{
-//                System.out.println("left is :" + platformLeft);
-//            }
-//            
-//            if((playerRight <= platformRight)){
-//                System.out.println("right side in");
-//            }
-//            else{
-//                System.out.println("right is :" + platformRight);
-//            }
-            
-//            if((playerBottom  <= platformBottom) && (playerLeft >= platformLeft) && (playerRight <= platformRight))
-            
+        if((playerRight > platformLeft ) && (playerLeft < platformRight) && (platformBottom > playerTop) && (platformTop < playerBottom) ){
+            // Check if player landed on platform
             if((playerBottom  <= platformBottom) && hrCheck(player)){
-                System.out.println("landed");
+                // System.out.println("landed");
                 landed = true;
                 pBtm = platformTop-50;
             }
@@ -364,7 +329,7 @@ public class Game extends Canvas implements Runnable {
         return result;
     }
     
-    
+    // Horizontal check when player landed on platform
     public boolean hrCheck(GameObject player){
         boolean result = false;
         
@@ -395,30 +360,36 @@ public class Game extends Canvas implements Runnable {
         return result;
     }
     
+    // When Player landed on platform
     private void levelClear(){
-        System.out.println("lvClear obj: " + handler.object.size());
+        // System.out.println("lvClear obj: " + handler.object.size());
         int tempY = 0;
 
         for(int i=0;i< handler.object.size(); i++){
             GameObject tempObj = handler.object.get(i);
+            // Move player
             if(tempObj.getId() == ID.Player){
-                tempObj.setY(520);
+                tempObj.setY(510);
             }
-
+            
+            // Move all platforms
             else if(tempObj.getId() == ID.Platform && tempObj.getLevel() > currentLv){
-//                System.out.println("P " + tempObj.getLevel() + tempObj.getIdx() + " moved");
+                // System.out.println("P " + tempObj.getLevel() + tempObj.getIdx() + " moved");
                 tempY = tempObj.getY();
                 tempObj.setY(tempY += 180);
             }
+            
+            // Remove all unused platforms
             else if(tempObj.getId() == ID.Platform && tempObj.getLevel() == currentLv){
-//                System.out.println("P " + tempObj.getLevel() + tempObj.getIdx() + " removed");
+                // System.out.println("P " + tempObj.getLevel() + tempObj.getIdx() + " removed");
                 handler.removeObject(tempObj);
                 i = -1;
             }
         }
         tempY -= 180;
         int tempX = 0;
-//        int tempY = 400;
+        
+        // Add new platforms
         for(int j = 0; j < 8; j++){
             if(j != randInt(0, 7) && j != randInt(0, 7)){
                 handler.addObject(new Platform(tempX, tempY, ID.Platform, currentLv+3, j));
@@ -426,11 +397,12 @@ public class Game extends Canvas implements Runnable {
             tempX += 100;
         }
         
-        
+        // Add score
         success += 10;
         currentLv++;
     }
     
+    // Render all object
     private void render() {
         BufferStrategy bs = this.getBufferStrategy();
         if(bs == null){
@@ -440,46 +412,28 @@ public class Game extends Canvas implements Runnable {
         
         Graphics g = bs.getDrawGraphics();
         
-        g.setColor(Color.decode("#F1f3f3"));
-        g.fillRect(0, 0, WIDTH, HEIGHT);
-                
-        
+        g.setColor(Color.decode(this.bgColors[currentLv % 8]));
+        g.fillRect(0, 0, WIDTH, HEIGHT);     
         
         if(gameState ==  STATE.Game){
             handler.render(g);
             
             Font currentFont = g.getFont();
             Font newFont = currentFont.deriveFont(currentFont.getSize() * 1.4F);
-            g.setFont(newFont);
-
-            g.setColor(Color.BLACK);
+            g.setFont(new java.awt.Font("Ubuntu", 1, 14));
+            
+            g.setColor(Color.WHITE);
+            g.fillRoundRect(15, 5, 100, 20, 15, 15);
+            g.fillRoundRect(15, 35, 100, 20, 15, 15);
+            
+            g.setColor(Color.decode("#3A1070"));
             g.drawString("Success: " +Integer.toString(success) , 20, 20);
+            g.drawString("Fail: " +Integer.toString(fail) , 20, 50);
             
-            g.setColor(Color.BLACK);
-            g.drawString("Fail: " +Integer.toString(fail) , 20, 40);
-//
-//            g.setColor(Color.BLACK);
-//            g.drawString("FPS: " +Integer.toString(fps), WIDTH-120, 20);
+            // g.setColor(Color.BLACK);
+            // g.drawString("FPS: " +Integer.toString(fps), WIDTH-120, 20);
             
-        }else{
-            Font currentFont = g.getFont();
-            Font newFont = currentFont.deriveFont(currentFont.getSize() * 3F);
-            g.setFont(newFont);
-
-            g.setColor(Color.BLACK);
-            g.drawString("GAME OVER", WIDTH/2 - 120, HEIGHT/2 - 30);
-
-            currentFont = g.getFont();
-            Font newScoreFont = currentFont.deriveFont(currentFont.getSize() * 0.5F);
-            g.setFont(newScoreFont);
-
-//            g.setColor(Color.BLACK);
-//            g.drawString("Score: " +Integer.toString(score), WIDTH/2 - 50, HEIGHT/2 - 10);
-//            
-//            g.setColor(Color.BLACK);
-//            g.drawString("Press Space to Continue", WIDTH/2 - 100, HEIGHT/2 + 30);
-        }
-                
+        }       
         g.dispose();
         bs.show();
     }
@@ -488,10 +442,23 @@ public class Game extends Canvas implements Runnable {
         window.CloseWindow();
     }
     
+    // Random between function
     public static int randInt(int min, int max) {
         Random rand = new Random();
         int randomNum = rand.nextInt((max - min) + 1) + min;
 
         return randomNum;
     }
+    
+    // Upload score to database
+    public void uploadScore(){
+        try {
+            TabelLevel tlevel = new TabelLevel();
+            tlevel.insertData(this.username, this.success, this.fail);
+        } catch (Exception ex) {
+            System.err.println(ex.toString());
+        }
+        JOptionPane.showMessageDialog(null, "Username : " + this.username + "\n" + "Success : " + this.success + "\n" + "Fail : " + this.fail);
+    }
+
 }

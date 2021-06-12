@@ -6,7 +6,6 @@
 package model;
 
 import java.awt.Graphics;
-import model.ID;
 
 /**
  *
@@ -28,9 +27,9 @@ public abstract class GameObject {
     
     
     public abstract void tick();
+    public abstract void render(Graphics g);
     public abstract int getLevel();
     public abstract int getIdx();
-    public abstract void render(Graphics g);
 
     public int getX() {
         return x;
